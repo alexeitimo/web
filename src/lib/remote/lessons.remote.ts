@@ -103,8 +103,15 @@ function transform(data: any, type: "group" | "teacher", weekOffset: number): We
 
     const weekParity = getWeekParity(weekOffset);
 
+    const unmutedItems = validatedItems.filter((item) => {
+        const isMuted = (item.isEven === 1 || item.isEven === 2) 
+            ? item.isEven !== weekParity 
+            : false;
+        return !isMuted; // Keep only items that are NOT muted
+    });
+
     // Group by day
-    const groupedItems = Object.groupBy(validatedItems, (item) => item.day);
+    const groupedItems = Object.groupBy(unmutedItems, (item) => item.day);
 
     const weekSpan = getWeekSpan(weekOffset);
 
@@ -157,7 +164,7 @@ function transform(data: any, type: "group" | "teacher", weekOffset: number): We
                     `${item.teacherNamePost} ${item.teacherN ? item.teacherN[0] : ""}. ${item.teacherO ? item.teacherO[0] : ""}. ${item.teacherF ?? ""}`.trim(),
                 teacherFull: `${item.teacherNamePost} ${item.teacherN ?? ""} ${item.teacherO ?? ""} ${item.teacherF ?? ""}`.trim(),
                 room: item.classroom,
-                isMuted: item.isEven === 1 || item.isEven === 2 ? item.isEven !== weekParity ? true : false : false,
+                isMuted: false,
             }));
 
         // For teachers, combine groups for the same lesson
