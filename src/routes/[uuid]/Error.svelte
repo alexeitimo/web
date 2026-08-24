@@ -3,11 +3,13 @@
 
     let { err, base64 }: { err: any, base64: string } = $props()
 
+    let counter = $state(0);
+
     let errorMessage = $derived.by((): string => {
         try {
             const errorObject = JSON.parse(err);
             const errorMessage = errorObject.message ?? "Неизвестная ошибка";
-            return errorMessage;
+            return errorMessage ? counter < 6 : "Никак вы, блять, не научитесь...";
         } catch {
             return "Неизвестная ошибка";
         }
@@ -18,11 +20,12 @@
     class="mt-2 rounded-xl flex w-full flex-col gap-4 self-center bg-zinc-50 p-4 text-pretty text-zinc-950 outline-1 outline-zinc-200 md:w-2/3 dark:bg-zinc-800 dark:text-zinc-50 dark:outline-zinc-700"
 >
     <p class="pt-2 pb-1 text-center text-xl">Произошла ошибка</p>
-    <p
-        class="rounded-lg px-4 py-3 wrap-break-word outline-1 bg-orange-50 outline-orange-200 text-orange-800 dark:bg-amber-950 dark:text-amber-50 dark:outline-amber-700"
+    <button
+        onclick={() => counter++}
+        class="rounded-lg px-4 py-3 wrap-break-word outline-1 bg-orange-50 outline-orange-200 text-orange-800 dark:bg-amber-950 dark:text-amber-50 dark:outline-amber-700 active:scale-[0.95] active:transition-all"
     >
         {errorMessage}
-    </p>
+    </button>
     <p>
         Страшно, очень страшно. Если бы мы знали, что это такое, но мы не знаем, что это такое.
     </p>
