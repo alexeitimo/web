@@ -51,6 +51,8 @@
             selectedGroup = filteredGroups.find((group) => group.id === value);
         };
     })
+
+    let counter = $state(0);
     
 </script>
 
@@ -179,6 +181,10 @@
             </Combobox.Portal>
         </Combobox.Root>    
     {:catch err}
-        <p class="p-3 w-full rounded-xl border-border bg-bg-elevated">{JSON.parse(err).message}</p>
+        <button
+            onclick={() => counter++}
+            class="p-3 w-full rounded-xl border-border bg-bg-elevated active:scale-[0.98] active:transition-all">
+            {counter < 6 ? JSON.parse(err).message : "Никак вы, блять, не научитесь..."}
+        </button>
     {/await}
 {/if}
