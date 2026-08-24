@@ -9,9 +9,17 @@
         try {
             const errorObject = JSON.parse(err);
             const errorMessage = errorObject.message ?? "Неизвестная ошибка";
-            return errorMessage ? counter < 6 : "Никак вы, блять, не научитесь...";
+            if(counter < 6) {
+                return errorMessage;
+            } else {
+                return "Никак вы, блять, не научитесь...";
+            }
         } catch {
-            return "Неизвестная ошибка";
+            if(counter < 6) {
+                return "Неизвестная ошибка";
+            } else {
+                return "Никак вы, блять, не научитесь...";
+            }
         }
     })
 </script>
@@ -22,7 +30,7 @@
     <p class="pt-2 pb-1 text-center text-xl">Произошла ошибка</p>
     <button
         onclick={() => counter++}
-        class="rounded-lg px-4 py-3 wrap-break-word outline-1 bg-orange-50 outline-orange-200 text-orange-800 dark:bg-amber-950 dark:text-amber-50 dark:outline-amber-700 active:scale-[0.95] active:transition-all"
+        class="rounded-lg px-4 py-3 wrap-break-word outline-1 bg-orange-50 outline-orange-200 text-orange-800 dark:bg-amber-950 dark:text-amber-50 dark:outline-amber-700 active:scale-[0.98] active:transition-all"
     >
         {errorMessage}
     </button>
